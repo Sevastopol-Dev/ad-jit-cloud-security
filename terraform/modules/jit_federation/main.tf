@@ -16,6 +16,9 @@ variable "max_session_duration" {
   default     = 1800
 }
 
+# Dynamically fetch the current AWS Account ID
+data "aws_caller_identity" "current" {}
+
 # Trust policy requiring MFA and limiting session usage via federation
 data "aws_iam_policy_document" "jit_trust" {
   statement {
@@ -24,7 +27,7 @@ data "aws_iam_policy_document" "jit_trust" {
 
     principals {
       type        = "Federated"
-      identifiers = ["arn:aws:iam::ACCOUNT-ID:saml-provider/OnPremisesADFS"]
+      identifiers = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:saml-provider/OnPremisesADFS"]
     }
 
     # CRITICAL SECURITY CONTROL: Enforce MFA assertion presence
