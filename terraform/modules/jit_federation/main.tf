@@ -1,21 +1,3 @@
-variable "aws_region" {
-  type        = string
-  description = "Target AWS deployment region"
-  default     = "us-east-1"
-}
-
-variable "role_name" {
-  type        = string
-  description = "Name of the ephemeral JIT IAM role"
-  default     = "JIT-Ephemeral-CloudAdmin"
-}
-
-variable "max_session_duration" {
-  type        = number
-  description = "Maximum session TTL in seconds (default: 1800s / 30 mins)"
-  default     = 1800
-}
-
 # Dynamically fetch the current AWS Account ID
 data "aws_caller_identity" "current" {}
 
